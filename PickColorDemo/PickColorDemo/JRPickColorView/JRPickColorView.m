@@ -42,7 +42,6 @@ CGFloat const JRPickColorView_magnifierView_WitdhOrHeight = 30.0f;
 
 @property (nonatomic, weak) UIImageView *magnifierView;
 
-@property (nonatomic, strong) UIImage *magnifierImage;
 @end
 
 @implementation JRPickColorView
@@ -97,6 +96,21 @@ CGFloat const JRPickColorView_magnifierView_WitdhOrHeight = 30.0f;
     }
 }
 
+- (void)setmagnifierImage:(UIImage *)image{
+    if (image) {
+        UIImageView *magnifierMarkView = [[UIImageView alloc] initWithImage:image];
+        magnifierMarkView.layer.frame = _magnifierView.bounds;
+        _magnifierView.layer.contentsScale = [UIScreen mainScreen].scale;
+        _magnifierView.layer.mask = magnifierMarkView.layer;
+        _magnifierView.layer.masksToBounds = YES;
+        _magnifierView.layer.contentsGravity = kCAGravityResizeAspectFill;
+    } else {
+        _magnifierView.layer.masksToBounds = NO;
+        _magnifierView.layer.mask = nil;
+    }
+    
+}
+
 #pragma mark 当前颜色数组下标
 - (void)setIndex:(NSUInteger)index{
     if (index > self.colors.count) index = 0;
@@ -138,9 +152,6 @@ CGFloat const JRPickColorView_magnifierView_WitdhOrHeight = 30.0f;
 - (void)commUI{
     [self setShowHorizontal:YES];
     self.backgroundColor = [UIColor clearColor];
-    if (!_magnifierImage) {
-        _magnifierImage = [UIImage imageNamed:@"shuidi.png"];
-    }
     if (!_showColorWindow) {
         _showColorWindow = [[[UIApplication sharedApplication] delegate] window];
     }
@@ -212,7 +223,7 @@ CGFloat const JRPickColorView_magnifierView_WitdhOrHeight = 30.0f;
         CGPoint point = [weakSelf convertPoint:weakSelf.showColorsContainer.center toView:weakSelf.showColorWindow];
         point.y -= 30;
         weakSelf.magnifierView.center = point;
-        weakSelf.magnifierView.image = [self imageMaskedWithColor:color image:weakSelf.magnifierImage];
+        weakSelf.magnifierView.backgroundColor = color;
     }];
 }
 
@@ -241,7 +252,7 @@ CGFloat const JRPickColorView_magnifierView_WitdhOrHeight = 30.0f;
         CGPoint point = [weakSelf convertPoint:weakSelf.showColorsContainer.center toView:weakSelf.showColorWindow];
         point.y -= 30;
         weakSelf.magnifierView.center = point;
-        weakSelf.magnifierView.image = [self imageMaskedWithColor:color image:weakSelf.magnifierImage];
+        weakSelf.magnifierView.backgroundColor = color;
     }];
 }
 

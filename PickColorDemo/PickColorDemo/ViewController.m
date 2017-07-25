@@ -22,6 +22,7 @@
     
     if (!_pickColorView) {
         JRPickColorView *customView = [[JRPickColorView alloc] initWithFrame:CGRectMake(0, 0, 200, 30) colors:@[[UIColor lightGrayColor], [UIColor blackColor], [UIColor orangeColor], [UIColor greenColor], [UIColor grayColor], [UIColor darkGrayColor], [UIColor redColor], [UIColor magentaColor], [UIColor purpleColor]]];
+        [customView setmagnifierImage:[UIImage imageNamed:@"shuidi"]];
         customView.center = self.view.center;
         [self.view addSubview:customView];
         _pickColorView = customView;

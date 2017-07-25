@@ -22,6 +22,8 @@
 /** 显示选择颜色，默认colors第一个颜色。(如果有colors有相同颜色，取顺序最先的) */
 @property (strong, nonatomic) UIColor *color;
 @property (assign, nonatomic) NSUInteger index;
+
+@property (nonatomic, setter=setmagnifierImage:) UIImage *magnifierImage;
 /** 是否需要动画（默认开启） */
 @property (assign, nonatomic) BOOL animation;
 /** 代理 */
